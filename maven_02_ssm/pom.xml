@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.itheima</groupId>
+  <artifactId>maven-02-ssm</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>maven-02-ssm Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <!-- 设置配置工程继承自parent工程    继承-->
+  <parent>
+    <groupId>com.itheima</groupId>
+    <artifactId>maven-01-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath> ../maven-01-parent/pom.xml</relativePath>
+  </parent>
+
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- 选择继承父管理项目的依赖管理  不需要写版本-->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.itheima</groupId>
+      <artifactId>maven-03-pojo</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.itheima</groupId>
+      <artifactId>maven-04-dao</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <!--  排除依赖，将maven-04-dao中的org.mybatis排除 -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.mybatis</groupId>
+          <artifactId>mybatis</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+
+  </dependencies>
+  <build>
+    <finalName>springmvc-04-request-param</finalName>
+    <plugins>
+      <plugin>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat7-maven-plugin -->
+        <!-- tomcat7-maven-plugin是maven中集成tomcat容器的一个插件 -->
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <path>/</path> <!--项目访问路径。当前配置的访问是localhost:9090/, 如果配置是/aa，则访问路径为localhost:9090/aa -->
+          <port>9090</port>
+          <uriEncoding>UTF-8</uriEncoding><!-- 非必需项 -->
+        </configuration>
+
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.1</version>
+        <!--  当maven没发现web.xml时系统不报错 -->
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
